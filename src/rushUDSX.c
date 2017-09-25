@@ -142,6 +142,8 @@ NYCE_STATUS g_retVal = NYCE_OK;//= USR_ERR_NOT_INITIALIZED;
 
 NYCE_STATUS UdsxInitialize(const void* argument, uint32_t argumentSize)
 {
+
+	MY_UDSX_ARGS* pArgs = (MY_UDSX_ARGS*)argument; // not using this
 	//-------------------------
 		//		Axis Naming
 		//-------------------------
@@ -223,7 +225,7 @@ NYCE_STATUS UdsxInitialize(const void* argument, uint32_t argumentSize)
 			}
 	    }
 
-    return g_retVal;
+    return NYCE_OK;
 }
 
 void UdsxExecuteAtSampleStart(void)
