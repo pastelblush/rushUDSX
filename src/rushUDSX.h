@@ -60,6 +60,20 @@ typedef struct my_udsx_args
 
 } MY_UDSX_ARGS;
 
+typedef struct axis_setting{
+	int					Shared_AxisType[10];
+	char				Shared_AxisName0[20];
+	char				Shared_AxisName1[20];
+	char				Shared_AxisName2[20];
+	char				Shared_AxisName3[20];
+	char				Shared_AxisName4[20];
+	char				Shared_AxisName5[20];
+	char				Shared_AxisName6[20];
+	char				Shared_AxisName7[20];
+	char				Shared_AxisName8[20];
+	char				Shared_AxisName9[20];
+}AXIS_SETTING;
+
 
 #define		SHMEM_AREA		2
 
@@ -79,6 +93,7 @@ typedef struct shmem_data
 	char				Shared_AxisName7[20];
 	char				Shared_AxisName8[20];
 	char				Shared_AxisName9[20];
+	unsigned int		STAT_FLG[10];
 	float 				VC_POS[20];
 	float 				FORCE_LIMIT[10];
 	float 				NET_CURRENT[10];

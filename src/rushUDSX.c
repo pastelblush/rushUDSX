@@ -143,27 +143,40 @@ NYCE_STATUS g_retVal = NYCE_OK;//= USR_ERR_NOT_INITIALIZED;
 NYCE_STATUS UdsxInitialize(const void* argument, uint32_t argumentSize)
 {
 
-	MY_UDSX_ARGS* pArgs = (MY_UDSX_ARGS*)argument; // not using this
+	AXIS_SETTING* axisSetting = (AXIS_SETTING*)argument; // not using this
 	//-------------------------
 		//		Axis Naming
 		//-------------------------
-		strcpy(Axis_Name[0],pShmem_data->Shared_AxisName0);
-		strcpy(Axis_Name[1],pShmem_data->Shared_AxisName1);
-		strcpy(Axis_Name[2],pShmem_data->Shared_AxisName2);
-		strcpy(Axis_Name[3],pShmem_data->Shared_AxisName3);
-		strcpy(Axis_Name[4],pShmem_data->Shared_AxisName4);
-		strcpy(Axis_Name[5],pShmem_data->Shared_AxisName5);
-		strcpy(Axis_Name[6],pShmem_data->Shared_AxisName6);
-		strcpy(Axis_Name[7],pShmem_data->Shared_AxisName7);
-		strcpy(Axis_Name[8],pShmem_data->Shared_AxisName8);
-		strcpy(Axis_Name[9],pShmem_data->Shared_AxisName9);
+		strcpy(Axis_Name[0],(char*)&axisSetting->Shared_AxisName0);
+		strcpy(Axis_Name[1],(char*)&axisSetting->Shared_AxisName1);
+		strcpy(Axis_Name[2],(char*)&axisSetting->Shared_AxisName2);
+		strcpy(Axis_Name[3],(char*)&axisSetting->Shared_AxisName3);
+		strcpy(Axis_Name[4],(char*)&axisSetting->Shared_AxisName4);
+		strcpy(Axis_Name[5],(char*)&axisSetting->Shared_AxisName5);
+		strcpy(Axis_Name[6],(char*)&axisSetting->Shared_AxisName6);
+		strcpy(Axis_Name[7],(char*)&axisSetting->Shared_AxisName7);
+		strcpy(Axis_Name[8],(char*)&axisSetting->Shared_AxisName8);
+		strcpy(Axis_Name[9],(char*)&axisSetting->Shared_AxisName9);
+
+
+				strcpy((char*)&pShmem_data->Shared_AxisName0,(char*)&axisSetting->Shared_AxisName0);
+				strcpy((char*)&pShmem_data->Shared_AxisName1,(char*)&axisSetting->Shared_AxisName1);
+				strcpy((char*)&pShmem_data->Shared_AxisName2,(char*)&axisSetting->Shared_AxisName2);
+				strcpy((char*)&pShmem_data->Shared_AxisName3,(char*)&axisSetting->Shared_AxisName3);
+				strcpy((char*)&pShmem_data->Shared_AxisName4,(char*)&axisSetting->Shared_AxisName4);
+				strcpy((char*)&pShmem_data->Shared_AxisName5,(char*)&axisSetting->Shared_AxisName5);
+				strcpy((char*)&pShmem_data->Shared_AxisName6,(char*)&axisSetting->Shared_AxisName6);
+				strcpy((char*)&pShmem_data->Shared_AxisName7,(char*)&axisSetting->Shared_AxisName7);
+				strcpy((char*)&pShmem_data->Shared_AxisName8,(char*)&axisSetting->Shared_AxisName8);
+				strcpy((char*)&pShmem_data->Shared_AxisName9,(char*)&axisSetting->Shared_AxisName9);
 
 	 	//-------------------------
 	 	//		Axis Type
 	 	//-------------------------
 	    for ( ax = 0; ax < 10; ax++ )
 	    {
-			Axis_Type[ax] = pShmem_data->Shared_AxisType[ax];
+			Axis_Type[ax] = axisSetting->Shared_AxisType[ax];
+			pShmem_data->Shared_AxisType[ax] = axisSetting->Shared_AxisType[ax];
 		}
 
 		ax = 0;
@@ -205,7 +218,7 @@ NYCE_STATUS UdsxInitialize(const void* argument, uint32_t argumentSize)
 	    	DRIVE_CURRENT[ax] = 0;
 			ScanForceCtr[ax] = 0;
 
-			pShmem_data->Shared_StatFlag[ax] = 0x02;
+			pShmem_data->STAT_FLG[ax] = 0x02;
 
 			pShmem_data->VC_POS[ax] = 0;
 			pShmem_data->VC_POS[ax + 10] = 0;
@@ -237,16 +250,6 @@ void UdsxExecuteAtSampleStart(void)
 }
 void UdsxExecuteAtSampleEnd(void)
 {
-    /*
-     * Check whether the shared memory is actually available.
-     */
-//    if (pShmem_data)
-//    {
-//        /*
-//         * Increase the counter.
-//         */
-//        pShmem_data->Shared_StatFlag[0]++;
-//    }
 
 if (pShmem_data)
 {
@@ -333,7 +336,7 @@ if (pShmem_data)
 				break;
 			}
 
-			//STAT_FLG[ax] =pShmem_data->Shared_StatFlag[ax];
+			pShmem_data->STAT_FLG[ax] = pShmem_data->Shared_StatFlag[ax];
 		}
 	}
 
@@ -527,7 +530,7 @@ void UdsxTerminate(void)
  */
 __attribute__((constructor)) void OnLoad(void)
 {
-    g_retVal = Initialize(FALSE);
+    g_retVal = Initialize(TRUE);
 }
 
 /**
