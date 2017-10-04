@@ -144,19 +144,19 @@ NYCE_STATUS UdsxInitialize(const void* argument, uint32_t argumentSize)
 {
 
 	AXIS_SETTING* axisSetting = (AXIS_SETTING*)argument; // not using this
-	//-------------------------
+		//-------------------------
 		//		Axis Naming
 		//-------------------------
-		strcpy(Axis_Name[0],(char*)&axisSetting->Shared_AxisName0);
-		strcpy(Axis_Name[1],(char*)&axisSetting->Shared_AxisName1);
-		strcpy(Axis_Name[2],(char*)&axisSetting->Shared_AxisName2);
-		strcpy(Axis_Name[3],(char*)&axisSetting->Shared_AxisName3);
-		strcpy(Axis_Name[4],(char*)&axisSetting->Shared_AxisName4);
-		strcpy(Axis_Name[5],(char*)&axisSetting->Shared_AxisName5);
-		strcpy(Axis_Name[6],(char*)&axisSetting->Shared_AxisName6);
-		strcpy(Axis_Name[7],(char*)&axisSetting->Shared_AxisName7);
-		strcpy(Axis_Name[8],(char*)&axisSetting->Shared_AxisName8);
-		strcpy(Axis_Name[9],(char*)&axisSetting->Shared_AxisName9);
+				strcpy(Axis_Name[0],(char*)&axisSetting->Shared_AxisName0);
+				strcpy(Axis_Name[1],(char*)&axisSetting->Shared_AxisName1);
+				strcpy(Axis_Name[2],(char*)&axisSetting->Shared_AxisName2);
+				strcpy(Axis_Name[3],(char*)&axisSetting->Shared_AxisName3);
+				strcpy(Axis_Name[4],(char*)&axisSetting->Shared_AxisName4);
+				strcpy(Axis_Name[5],(char*)&axisSetting->Shared_AxisName5);
+				strcpy(Axis_Name[6],(char*)&axisSetting->Shared_AxisName6);
+				strcpy(Axis_Name[7],(char*)&axisSetting->Shared_AxisName7);
+				strcpy(Axis_Name[8],(char*)&axisSetting->Shared_AxisName8);
+				strcpy(Axis_Name[9],(char*)&axisSetting->Shared_AxisName9);
 
 
 				strcpy((char*)&pShmem_data->Shared_AxisName0,(char*)&axisSetting->Shared_AxisName0);
