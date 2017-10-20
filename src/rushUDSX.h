@@ -97,6 +97,8 @@ typedef struct shmem_data
 	float 				VC_POS[20];
 	float 				FORCE_LIMIT[10];
 	float 				NET_CURRENT[10];
+	int					udsx_enter;
+	int					udsx_exit;
 } SHMEM_DATA;
 
 struct ThreadArgs {

@@ -253,6 +253,7 @@ void UdsxExecuteAtSampleEnd(void)
 
 if (pShmem_data)
 {
+	pShmem_data->udsx_enter = 1;
 	DP_THRESHOLD = pShmem_data->Shared_CtrFlag[11];
 
 	if (pShmem_data->Shared_CtrFlag[10] == 1.00)
@@ -497,6 +498,7 @@ if (pShmem_data)
 		//	ScanForceCtr[ax] = 0;
 		//}
 	}
+	pShmem_data->udsx_exit = 1;
 	}
 }
 
