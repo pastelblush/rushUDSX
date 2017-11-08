@@ -75,66 +75,6 @@ static NYCE_STATUS Initialize(BOOL create);
  */
 static void Terminate(void);
 
-
-#if defined(BIN)
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-
-volatile sig_atomic_t g_stop;
-
-/**
- *  @brief  Interrupt signal handler for catching Ctrl-C
- *
- *  The application is stopped when the signal is received.
- *
- *  @param[in]  signum  number of the signal that occurred.
- */
-void IntHandler(int signum)
-{
-    UNUSED(signum);
-    g_stop = 1;
-}
-
-int main(void)
-{
-    NYCE_STATUS retVal;
-
-    /*
-     * Install the signal handler
-     */
-    (void)signal(SIGINT, IntHandler);
-
-    /*
-     * Initialize the shared memory.
-     */
-    retVal = Initialize(FALSE);
-    if (NyceSuccess(retVal))
-    {
-        /*
-         * Print the value of the counter stored in shared memory every second
-         * until Ctrl-C is pressed.
-         */
-        printf("Press Ctrl-C to stop\n");
-        while (!g_stop)
-        {
-            printf("\r%u", *g_pCounter);
-            (void)fflush(stdout);
-            (void)sleep(1);
-        }
-        printf("\n");
-
-        /*
-         * Terminate the shared memory before we stop the application.
-         */
-        Terminate();
-    }
-
-    return (int)retVal;
-}
-
-#endif
-
 #if defined(SO)
 #include <udsxapi.h>
 
@@ -762,6 +702,7 @@ void ChkVCStat(int AxisID)
 			}
 
 			pShmem_data->Shared_StatFlag[AxisID] |= 0x02;
+			//pShmem_data->Shared_StatFlag[AxisID] |= 0x10; // preemp vc ready
 		}
 
 		pShmem_data->Shared_StatFlag[AxisID] |= 0x01;
@@ -792,6 +733,7 @@ void ChkVCStat(int AxisID)
 		if (pShmem_data->VC_POS[AxisID * 2] <= STANDBY_POS[AxisID] + LINEAR_THRESHOLD)
 		{
 			pShmem_data->Shared_StatFlag[AxisID] |= 0x02;
+			//pShmem_data->Shared_StatFlag[AxisID] |= 0x10; // preemp vc ready
 		}
 
 		if ((pShmem_data->Shared_StatFlag[AxisID] & 0x01) != 0)
@@ -835,6 +777,7 @@ void ChkVCStat(int AxisID)
 		if (pShmem_data->VC_POS[AxisID * 2] <= STANDBY_POS[AxisID] + LINEAR_THRESHOLD)
 		{
 			pShmem_data->Shared_StatFlag[AxisID] |= 0x02;
+			//pShmem_data->Shared_StatFlag[AxisID] |= 0x10; /// preemp vc ready
 		}
 
 		if ((pShmem_data->Shared_StatFlag[AxisID] & 0x01) != 0)
@@ -876,6 +819,7 @@ void ChkVCStat(int AxisID)
 		if (pShmem_data->VC_POS[AxisID * 2] <= STANDBY_POS[AxisID] + LINEAR_THRESHOLD)
 		{
 			pShmem_data->Shared_StatFlag[AxisID] |= 0x02;
+			//pShmem_data->Shared_StatFlag[AxisID] |= 0x10; // preemp vc ready
 		}
 
 		break;
